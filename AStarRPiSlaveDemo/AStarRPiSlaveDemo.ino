@@ -36,6 +36,8 @@ struct Data
 
   bool playNotes;
   char notes[14];
+  int16_t leftEncoder, rightEncoder;
+  int16_t leftEncoderErrors, rightEncoderErrors;
 };
 
 PololuRPiSlave<struct Data,0> slave;
@@ -44,6 +46,9 @@ AStar32U4Motors motors;
 AStar32U4ButtonA buttonA;
 AStar32U4ButtonB buttonB;
 AStar32U4ButtonC buttonC;
+
+int8_t last_encoder1;
+int8_t last_encoder2;
 
 void setup()
 {
@@ -57,11 +62,7 @@ void setup()
 }
 
 void loop()
-{
-  char buf[10];
-  snprintf(buf, 10, "%d %d", Encoders::count1, Encoders::count2);
-  Serial.println(buf);
-  
+{  
   // Call updateBuffer() before using the buffer, to get the latest
   // data including recent master writes.
   slave.updateBuffer();
@@ -70,6 +71,12 @@ void loop()
   slave.buffer.buttonA = buttonA.isPressed();
   slave.buffer.buttonB = buttonB.isPressed();
   slave.buffer.buttonC = buttonC.isPressed();
+  slave.buffer.leftEncoder += (int8_t)(Encoders::count1 - last_encoder1);
+  slave.buffer.rightEncoder += (int8_t)(Encoders::count2 - last_encoder2);
+  last_encoder1 = Encoders::count1;
+  last_encoder2 = Encoders::count2;
+  slave.buffer.leftEncoderErrors = Encoders::error1;
+  slave.buffer.rightEncoderErrors = Encoders::error2;
 
   // Change this to readBatteryMillivoltsLV() for the LV model.
   slave.buffer.batteryMillivolts = readBatteryMillivoltsSV();
