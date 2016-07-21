@@ -1,3 +1,8 @@
+// Encoder 1 is connected to Arduino pins 0 & 1 (RX/TX; INT2/3).
+// Encoder 2 is connected to Arduino pins 15 & 16 (PB1/2; PCINT1/2).
+// Using the PCINT interrupts for encoder2 and INT interrupts for encoder1
+// keeps the two interrupt routines shorter and faster.
+
 #include "Arduino.h"
 #include "Encoders.h"
 
