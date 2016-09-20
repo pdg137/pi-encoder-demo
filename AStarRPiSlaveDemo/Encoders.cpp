@@ -5,6 +5,7 @@
 
 #include "Arduino.h"
 #include "Encoders.h"
+#include <AStar32U4.h>
 
 int8_t Encoders::count1;
 int8_t Encoders::count2;
@@ -28,6 +29,7 @@ void Encoders::init() {
 ISR(INT2_vect,ISR_ALIASOF(INT3_vect));
 ISR(INT3_vect)
 {
+  ledRed(1);
   uint8_t new11 = ((PIND & (1<<2)) != 0);
   uint8_t new12 = ((PIND & (1<<3)) != 0);
   
@@ -38,11 +40,13 @@ ISR(INT3_vect)
     
   last11 = new11;
   last12 = new12;
+  ledRed(0);
 }
 
 // Encoder two uses PCINT1 and PCINT2 (which trigger the PCINT0 interrupt)  
 ISR(PCINT0_vect)
 {
+  ledGreen(1);
   uint8_t new21 = ((PINB & (1<<1)) != 0);
   uint8_t new22 = ((PINB & (1<<2)) != 0);
   
@@ -53,4 +57,5 @@ ISR(PCINT0_vect)
   
   last21 = new21;
   last22 = new22;
+  ledGreen(0);
 }

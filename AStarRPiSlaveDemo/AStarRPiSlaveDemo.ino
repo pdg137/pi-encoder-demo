@@ -87,9 +87,9 @@ void loop()
   }
 
   // READING the buffer is allowed before or after finishWrites().
-  ledYellow(slave.buffer.yellow);
-  ledGreen(slave.buffer.green);
-  ledRed(slave.buffer.red);
+  //ledYellow(slave.buffer.yellow);
+  //ledGreen(slave.buffer.green);
+  //ledRed(slave.buffer.red);
   motors.setSpeeds(slave.buffer.leftMotor, slave.buffer.rightMotor);
 
   // Playing music involves both reading and writing, since we only
