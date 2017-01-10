@@ -27,17 +27,17 @@
 
 struct Data
 {
-  bool yellow, green, red;
-  bool buttonA, buttonB, buttonC;
+  bool yellow, green, red; // 0 1 2
+  bool buttonA, buttonB, buttonC; // 3 4 5
 
-  int16_t leftMotor, rightMotor;
-  uint16_t batteryMillivolts;
-  uint16_t analog[6];
+  int16_t leftMotor, rightMotor; // 67 89
+  uint16_t batteryMillivolts; // 10 11
+  uint16_t analog[6]; // 12-23
 
-  bool playNotes;
-  char notes[14];
-  int16_t leftEncoder, rightEncoder;
-  int16_t leftEncoderErrors, rightEncoderErrors;
+  bool playNotes; // 24
+  char notes[14]; // 25-38
+  int16_t leftEncoder, rightEncoder; // 39-42
+  int16_t leftEncoderErrors, rightEncoderErrors; // 43-46
 };
 
 PololuRPiSlave<struct Data,0> slave;
